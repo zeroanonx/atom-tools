@@ -14,3 +14,29 @@ export const pick = <T extends object, K extends keyof T>(
     Object.entries(obj).filter(([key]) => keys.includes(key as K) as boolean)
   ) as Partial<Pick<T, K>>
 }
+
+/**
+ * 仅将 `source` 中已存在于 `target` 的 key 对应的值赋给 `target`。
+ * 其余 key 保持不变。
+ *
+ * @template {Record<string, any>} T
+ * @param {T} target  需要被赋值的目标对象（会被原地修改）
+ * @param {Partial<T>} source 提供值的源对象
+ * @returns {T} 返回修改后的目标对象（便于链式调用）
+ *
+ * @example
+ * const a = { x: 1, y: 2 };
+ * const b = { x: 9, z: 3 };
+ * assignExistingKeys(a, b); // a -> { x: 9, y: 2 }
+ */
+export const assignExistingKeys = <T extends Record<string, any>>(
+  target: T,
+  source: Partial<T>
+) => {
+  Object.keys(target).forEach((key) => {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      target[key as keyof T] = source[key as keyof T] as T[keyof T]
+    }
+  })
+  return target
+}
