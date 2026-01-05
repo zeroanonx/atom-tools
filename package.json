@@ -42,7 +42,7 @@
     "require": "./dist/main/index.umd.cjs"
   },
   "scripts": {
-    "prettier": " prettier --write . ",
+    "prettier": "prettier --write . ",
     "dev": "vite --host",
     "build": " pnpm prettier && tsc && vite build",
     "docs:dev": "vitepress dev docs --host --watch",
